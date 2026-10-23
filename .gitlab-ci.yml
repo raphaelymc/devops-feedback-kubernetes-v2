@@ -1,0 +1,27 @@
+stages:
+  - build
+  - deploy
+
+default:
+  tags:
+    - vm-local
+
+build:
+  stage: build
+  script:
+    - docker build -t "devops-feedback:$CI_COMMIT_SHORT_SHA" app
+    - docker save "devops-feedback:$CI_COMMIT_SHORT_SHA" | sudo -n /usr/local/bin/k3s ctr -n k8s.io images import -
+  rules:
+    - if: '$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH'
+
+deploy:
+  stage: deploy
+  tags:
+    - vm-local
+  script:
+    - |
+      export KUBECONFIG="$(getent passwd gitlab-runner | cut -d: -f6)/.kube/config"
+      kubectl -n devops-feedback set image deployment/feedback feedback="devops-feedback:$CI_COMMIT_SHORT_SHA"
+      kubectl -n devops-feedback rollout status deployment/feedback --timeout=120s
+  rules:
+    - if: '$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH'

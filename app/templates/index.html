@@ -1,0 +1,57 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>DevOps Feedback</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f1f5f9;
+            display: flex;
+            justify-content: center;
+            padding: 50px 15px;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            width: 100%;
+            max-width: 400px;
+        }
+        input, textarea, button {
+            box-sizing: border-box;
+            width: 100%;
+            padding: 12px;
+            margin: 8px 0;
+        }
+        button {
+            background: #2563eb;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>DevOps Feedback</h1>
+        <p>Compartilhe sua experiência com tecnologia.</p>
+
+        <form action="/feedback" method="POST">
+            <input type="text" name="nome"
+                   placeholder="Seu nome" required>
+
+            <input type="email" name="email"
+                   placeholder="Seu e-mail" required>
+
+            <textarea name="comentario"
+                      placeholder="Seu comentário"
+                      required></textarea>
+
+            <button type="submit">Enviar feedback</button>
+        </form>
+    </div>
+</body>
+</html>
